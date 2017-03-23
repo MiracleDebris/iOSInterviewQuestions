@@ -56,7 +56,7 @@
 
  22. 22--55题，请看下篇。
 
-###1. 风格纠错题
+### 1. 风格纠错题
 ![enter image description here](http://i.imgur.com/O7Zev94.png)
 修改完的代码：
 
@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 。因为***硬伤部分***没什么技术含量，为了节省大家时间，放在后面讲，大神请直接看***优化部分***。
 
 
-####***优化部分***
+#### ***优化部分***
 
  4. enum 建议使用 `NS_ENUM` 和 `NS_OPTIONS` 宏来定义枚举类型，参见官方的 [Adopting Modern Objective-C](https://developer.apple.com/library/ios/releasenotes/ObjectiveC/ModernizationObjC/AdoptingModernObjective-C/AdoptingModernObjective-C.html) 一文：
 
@@ -245,7 +245,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  ```
  属性的参数应该按照下面的顺序排列： 原子性，读写 和 内存管理。 这样做你的属性更容易修改正确，并且更好阅读。这在[《禅与Objective-C编程艺术 >》](https://github.com/oa414/objc-zen-book-cn#属性定义)里有介绍。而且习惯上修改某个属性的修饰符时，一般从属性名从右向左搜索需要修动的修饰符。最可能从最右边开始修改这些属性的修饰符，根据经验这些修饰符被修改的可能性从高到底应为：内存管理 > 读写权限 >原子操作。
 
-####***硬伤部分***
+#### ***硬伤部分***
 
  1. 在-和(void)之间应该有一个空格
  3. enum 中驼峰命名法和下划线命名法混用错误：枚举类型的命名规则和函数的命名规则相同：命名时使用驼峰命名法，勿使用下划线命名法。
@@ -263,7 +263,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  7.  <p><del>doLogIn方法中的 `LogIn` 命名不清晰：笔者猜测是login的意思，应该是粗心手误造成的。
  （勘误： `Login` 是名词， `LogIn`  是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>
 
-###2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
+### 2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
 什么情况使用 weak 关键字？
 
 
@@ -280,7 +280,7 @@ NSlnteger 等)的简单赋值操作。
 
  2. assign 可以用非 OC 对象,而 weak 必须用于 OC 对象
 
-###3. 怎么用 copy 关键字？
+### 3. 怎么用 copy 关键字？
 用途：
 
  1. NSString、NSArray、NSDictionary 等等经常使用copy关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary；
@@ -314,7 +314,7 @@ NSlnteger 等)的简单赋值操作。
 该问题在下文中也有论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？***
 
 
-###4. 这个写法会出什么问题： `@property (copy) NSMutableArray *array;`
+### 4. 这个写法会出什么问题： `@property (copy) NSMutableArray *array;`
 两个问题：1、添加,删除,修改数组内的元素的时候,程序会因为找不到对应的方法而崩溃.因为 copy 就是复制一个不可变 NSArray 的对象；2、使用了 atomic 属性会严重影响性能 ； 
 
 第1条的相关原因在下文中有论述***《用@property声明的NSString（或NSArray，NSDictionary）经常使用 copy 关键字，为什么？如果改用strong关键字，可能造成什么问题？》*** 以及上文***《怎么用 copy 关键字？》***也有论述。
@@ -366,7 +366,7 @@ self.mutableArray = array;
 因此，开发iOS程序时一般都会使用 nonatomic 属性。但是在开发 Mac OS X 程序时，使用
  atomic 属性通常都不会有性能瓶颈。
 
-###5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
+### 5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
 
 
 > 若想令自己所写的对象具有拷贝功能，则需实现 NSCopying 协议。如果自定义的对象分为可变版本与不可变版本，那么就要同时实现 `NSCopying` 与 `NSMutableCopying` 协议。
@@ -642,7 +642,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 
 	
-###6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
+### 6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
 
 **@property 的本质是什么？**
 
@@ -750,7 +750,7 @@ typedef struct {
 
 也就是说我们每次在增加一个属性,系统都会在 `ivar_list` 中添加一个成员变量的描述,在 `method_list` 中增加 setter 与 getter 方法的描述,在属性列表中增加一个属性的描述,然后计算该属性在对象中的偏移量,然后给出 setter 与 getter 方法对应的实现,在 setter 方法中从偏移量的位置开始赋值,在 getter 方法中从偏移量开始取值,为了能够读取正确字节数,系统对象偏移量的指针类型进行了类型强转.
 
-###7. @protocol 和 category 中如何使用 @property
+### 7. @protocol 和 category 中如何使用 @property
 
  1. 在 protocol 中使用 property 只会生成 setter 和 getter 方法声明,我们使用属性的目的,是希望遵守我协议的对象能实现该属性
  2. category 使用 @property 也是只会生成 setter 和 getter 方法的声明,如果我们真的需要给 category 增加属性的实现,需要借助于运行时的两个函数：
@@ -758,7 +758,7 @@ typedef struct {
   1. `objc_setAssociatedObject`
   2. `objc_getAssociatedObject`
 
-###8. runtime 如何实现 weak 属性
+### 8. runtime 如何实现 weak 属性
 
 要实现 weak 属性，首先要搞清楚 weak 属性的特点：
 
@@ -1059,7 +1059,7 @@ NSObject *foo = [[NSObject alloc] init];
 如果对 `cyl_runAtDealloc` 的实现原理有兴趣，可以看下这篇博文 [***Fun With the Objective-C Runtime: Run Code at Deallocation of Any Object***](http://stackoverflow.com/a/31560217/3395008)
 
 
-###9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
+### 9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
 属性可以拥有的特质分为四类:
  
  1. 原子性--- `nonatomic` 特质
@@ -1150,7 +1150,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 }
  ```
 
-###10. weak属性需要在dealloc中置nil么？
+### 10. weak属性需要在dealloc中置nil么？
 不需要。
 
 
